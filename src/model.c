@@ -4,12 +4,12 @@
 void initializeCube(MODEL *cube) {
     // Initialize a cube model
 	cube->bounds_center = createVertex(0, 0, 0);
-    COLOR red = createColor(255,0,0);
-    COLOR green = createColor(0,255,0);
-    COLOR blue = createColor(0,0,255);
-    COLOR yellow = createColor(255,255,0);
-    COLOR pink = createColor(255, 0, 100);
-    COLOR weird = createColor(100, 255, 70);
+    COLOUR red = createColour(255,0,0);
+    COLOUR green = createColour(0,255,0);
+    COLOUR blue = createColour(0,0,255);
+    COLOUR yellow = createColour(255,255,0);
+    COLOUR pink = createColour(255, 0, 100);
+    COLOUR weird = createColour(100, 255, 70);
     cube->vertices = malloc(sizeof(VERTEX) * 8);
     cube->triangles = malloc(sizeof(TRIANGLE) * 12);
     cube->vertices_length = 8;

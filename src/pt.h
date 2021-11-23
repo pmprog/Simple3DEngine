@@ -4,12 +4,12 @@
 #ifndef PT_H
 #define PT_H
 
-typedef struct POINT {
+typedef struct POINTF {
     FIXED x;
     FIXED y;
-} POINT;
+} POINTF;
 
-static inline void convertPointToScreen(POINT *point) {
+static inline void convertPointToScreen(POINTF *point) {
     // Convert point where (SCREEN_WIDTH / 2 * x,
     //                  SCREEN_HEIGHT / 2 - y - 1)
 	// is the origin (0,0)
@@ -17,17 +17,17 @@ static inline void convertPointToScreen(POINT *point) {
     point->y = (WINDOW_HEIGHT / 2 - (point->y >> FIX_SHIFT) - 1) << FIX_SHIFT;
 }
 
-static inline POINT createPoint(FIXED x, FIXED y) {
+static inline POINTF createPoint(FIXED x, FIXED y) {
     // Create a point from data
-    POINT temp;
+    POINTF temp;
     temp.x = x;
     temp.y = y;
     return temp;
 }
 
 
-static inline void swapPoint(POINT *p1, POINT *p2) {
-    POINT temp;
+static inline void swapPoint(POINTF *p1, POINTF *p2) {
+    POINTF temp;
     temp = *p1;
     *p1 = *p2;
     *p2 = temp;

@@ -4,7 +4,7 @@
 #include "instance.h"
 #include "fixed.h"
 #include <stdlib.h>
-#include <SDL2/SDL.h>
+#include "sdlgba.h"
 #include <unistd.h>
 
 int runningGame = 1;
@@ -16,12 +16,12 @@ int main() {
     SDL_Window *window;
 
 	// Array of keys being pressed
-    const unsigned char *keys = SDL_GetKeyboardState(NULL);
+    //const unsigned char *keys = SDL_GetKeyboardState(NULL);
 
 	// Initialize sdl window
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
-    fillDisplay(renderer, createColor(0, 0, 0));
+    fillDisplay(renderer, createColour(0, 0, 0));
 	
 	// Positions and rotations of each cube
     VERTEX positions[2] = {createVertex(2 << FIX_SHIFT, 0 << FIX_SHIFT, 7 << FIX_SHIFT),
@@ -48,56 +48,47 @@ int main() {
 
     while(runningGame) {
 		// Draw the cubes and interact with them
-        fillDisplay(renderer, createColor(0,0,0));
+        fillDisplay(renderer, createColour(0,0,0));
         for (int i = 0; i < 2; i++) {
             renderInstance(&instances[i], renderer);
         }
         updateDisplay(renderer);
-        while (SDL_PollEvent(&event)) {
+        //while (SDL_PollEvent(&event)) {
             for (int i = 0; i < 2; i++) {
 				// Check events and update each cube accordingly
                 if (event.type == SDL_QUIT) {
                     runningGame = 0;
                 }
-                if (keys[SDL_SCANCODE_RIGHT]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_RIGHT)) {
                     positions[i].x += float_to_fixed(0.2);
                 }
-                if (keys[SDL_SCANCODE_LEFT]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_LEFT)) {
                     positions[i].x -= float_to_fixed(0.2);
                 }
-                if (keys[SDL_SCANCODE_DOWN]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_DOWN)) {
                     positions[i].y -= float_to_fixed(0.1);
                 }
-                if (keys[SDL_SCANCODE_UP]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_UP)) {
                     positions[i].y += float_to_fixed(0.1);
                 }
-                if (keys[SDL_SCANCODE_W]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_W)) {
                     positions[i].z += float_to_fixed(0.1);
                 }
-                if (keys[SDL_SCANCODE_S]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_S)) {
                     positions[i].z -= float_to_fixed(0.1);
                 }
-                if (keys[SDL_SCANCODE_Q]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_Q)) {
                     xRots[i] += float_to_fixed(1);
                 }
-                if (keys[SDL_SCANCODE_E]) {
+                if (SDL_KeyHeld(SDL_SCANCODE_E)) {
                     xRots[i] += float_to_fixed(-1);
                 }
-                if (keys[SDL_SCANCODE_Z]) {
-                    zRots[i] += float_to_fixed(1);
-                }
-                if (keys[SDL_SCANCODE_C]) {
-                    zRots[i] += float_to_fixed(-1);
-                }
-                if (keys[SDL_SCANCODE_A]) {
-                    yRots[i] += float_to_fixed(1);
-                }
-                if (keys[SDL_SCANCODE_D]) {
-                    yRots[i] += float_to_fixed(-1);
-                }
             }
-        }
-        sleep(.1);
+        //}
+        xRots[0] += float_to_fixed(0.01);
+        yRots[0] += float_to_fixed(0.01);
+        xRots[1] -= float_to_fixed(0.01);
+        yRots[1] -= float_to_fixed(0.01);
     }
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

@@ -3,7 +3,7 @@
 void renderInstance(INSTANCE *instance, SDL_Renderer *renderer) {
     // Render an instance
 	// Array for projected points
-    POINT projected[instance->model->vertices_length];
+    POINTF projected[instance->model->vertices_length];
 	// Pointers for transformed vertices
     VERTEX *transformed = malloc(sizeof(VERTEX) * instance->model->vertices_length);
 
@@ -23,7 +23,7 @@ void renderInstance(INSTANCE *instance, SDL_Renderer *renderer) {
     normalizeVertex(&playerLight);
     TRIANGLE *addr;
     FIXED intensity;
-    COLOR clr;
+    COLOUR clr;
     for (int i = 0; i < instance->model->triangles_length; i++) {
         // Render the triangle
         addr = (instance->model->triangles + i);
@@ -35,7 +35,7 @@ void renderInstance(INSTANCE *instance, SDL_Renderer *renderer) {
         normalizeVertex(&copyV);
 
 		// Grayscale color of the triangle from light intensity
-        clr = createColor(intensity >> FIX_SHIFT, intensity >> FIX_SHIFT, intensity >> FIX_SHIFT);
+        clr = createColour(intensity >> FIX_SHIFT, intensity >> FIX_SHIFT, intensity >> FIX_SHIFT);
 
         if (dotProduct(&n, &copyV) < 0) {
 			// The triangle is viewable by the camera

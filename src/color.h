@@ -1,15 +1,15 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-typedef struct COLOR {
+typedef struct COLOUR {
     unsigned char red;
     unsigned char green;
     unsigned char blue;
-} COLOR;
+} COLOUR;
 
-static inline COLOR createColor(unsigned char red, unsigned char green, unsigned char blue) {
+static inline COLOUR createColour(unsigned char red, unsigned char green, unsigned char blue) {
     // Create a color given values
-    COLOR temp;
+    COLOUR temp;
     temp.red = red;
     temp.green = green;
     temp.blue = blue;

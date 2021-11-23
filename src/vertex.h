@@ -12,16 +12,16 @@ typedef struct VERTEX {
     FIXED z;
 } VERTEX;
 
-static inline POINT viewportToScreen (POINT *point) {
+static inline POINTF viewportToScreen (POINTF *point) {
     // Convert a viewport coordinate to screen x, y
     return createPoint(fixed_multiply(point->x, fixed_divide(WINDOW_WIDTH << FIX_SHIFT, viewport_width << FIX_SHIFT)),
         fixed_multiply(point->y, fixed_divide(WINDOW_HEIGHT << FIX_SHIFT, viewport_height << FIX_SHIFT))
     );
 }
 
-static inline POINT projectVertex(VERTEX *vertex) {
+static inline POINTF projectVertex(VERTEX *vertex) {
     // Project a vertex to a point
-    POINT temp;
+    POINTF temp;
     if (vertex->z != 0) {
         // Make sure we don't divide by zero
         temp = createPoint(fixed_multiply(vertex->x, fixed_divide(ZPlane << FIX_SHIFT, vertex->z)),
